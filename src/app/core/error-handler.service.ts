@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ToastyService } from 'ng2-toasty';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ErrorHandlerService {
 
   constructor(private toasty: ToastyService) { }

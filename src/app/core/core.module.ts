@@ -9,6 +9,7 @@ import { ToastyModule } from 'ng2-toasty';
 import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
+import { CategoriaService } from './../categorias/categoria.service';
 import { NavbarComponent } from './navbar/navbar.component';
 
 registerLocaleData(localePt, 'pt-BR');
@@ -29,6 +30,7 @@ registerLocaleData(localePt, 'pt-BR');
   providers: [
     LancamentoService,
     PessoaService,
+    CategoriaService,
     ErrorHandlerService,
 
     ConfirmationService,
