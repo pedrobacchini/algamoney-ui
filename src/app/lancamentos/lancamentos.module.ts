@@ -15,8 +15,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';;
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { SharedModule } from '../shared/shared.module';
-
-
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 @NgModule({
   declarations: [
@@ -37,11 +36,9 @@ import { SharedModule } from '../shared/shared.module';
     DropdownModule,
     CurrencyMaskModule,
 
-    SharedModule
+    SharedModule,
+    LancamentosRoutingModule
   ],
-  exports: [
-    LancamentoCadastroComponent,
-    LancamentosPesquisaComponent
-  ]
+  exports: []
 })
 export class LancamentosModule { }
