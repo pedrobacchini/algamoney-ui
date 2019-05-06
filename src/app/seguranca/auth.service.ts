@@ -3,6 +3,7 @@ import {Http, Headers} from '@angular/http';
 import {environment} from '../../environments/environment';
 
 import 'rxjs/add/operator/toPromise';
+import {JwtHelper} from 'angular2-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +11,14 @@ import 'rxjs/add/operator/toPromise';
 export class AuthService {
 
   oauthTokenUrl: string;
+  jwtPayload: any;
 
-  constructor(private http: Http) {
+  constructor(
+    private http: Http,
+    private jwtHelper: JwtHelper
+  ) {
     this.oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
+    this.carregarToken();
   }
 
   login(usuario: string, senha: string): Promise<void> {
@@ -27,9 +33,23 @@ export class AuthService {
       .toPromise()
       .then(response => {
         console.log(response);
+        this.armazenarToken(response.json().access_token);
       })
       .catch(response => {
         console.log(response);
       });
+  }
+
+  private armazenarToken(token: string) {
+    localStorage.setItem('token', token);
+    this.jwtPayload = this.jwtHelper.decodeToken(token);
+  }
+
+  private carregarToken() {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.jwtPayload = this.jwtHelper.decodeToken(token);
+    }
   }
 }

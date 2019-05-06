@@ -15,7 +15,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { AuthService } from '../seguranca/auth.service';
-
+import { JwtHelper } from 'angular2-jwt';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -38,9 +38,10 @@ registerLocaleData(localePt, 'pt-BR');
     PessoaService,
     CategoriaService,
     ErrorHandlerService,
+    AuthService,
 
     ConfirmationService,
-    AuthService,
+    JwtHelper,
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]

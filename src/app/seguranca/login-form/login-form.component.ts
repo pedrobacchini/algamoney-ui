@@ -8,6 +8,8 @@ import { AuthService } from '../auth.service';
 })
 export class LoginFormComponent implements OnInit {
 
+  defaultEmail = 'admin@algamoney.com';
+
   constructor(private auth: AuthService) { }
 
   ngOnInit() {
