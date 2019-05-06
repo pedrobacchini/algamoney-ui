@@ -12,7 +12,7 @@
 
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
 
-    <li class="navbar-usuario" (click)="exibindoMenu = false">José da Silva</li>
+    <li class="navbar-usuario" (click)="exibindoMenu = false">{{auth.jwtPayload?.nome}}</li>
 
     <li class="navbar-menuitem" routerLinkActive="ativo">
       <a routerLink="/lancamentos" (click)="exibindoMenu = false">Lançamentos</a>
