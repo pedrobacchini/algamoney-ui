@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/components/button/button';
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 
 import { LoginFormComponent } from './login-form/login-form.component';
+import { SegurancaRoutingModule } from './seguranca-routing.module';
 
 @NgModule({
   declarations: [LoginFormComponent],
@@ -14,7 +15,9 @@ import { LoginFormComponent } from './login-form/login-form.component';
     FormsModule,
 
     InputTextModule,
-    ButtonModule
+    ButtonModule,
+
+    SegurancaRoutingModule
   ]
 })
 export class SegurancaModule { }
