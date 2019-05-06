@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment';
 
 import { Lancamento } from 'src/app/core/model';
+import {environment} from '../../environments/environment';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -17,9 +18,11 @@ export class LancamentoFiltro {
 @Injectable()
 export class LancamentoService {
 
-  lancamentosUrl = 'https://pedrobacchini-algamoney-api.herokuapp.com/lancamentos';
+  lancamentosUrl: string;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
+  }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const params = new URLSearchParams();

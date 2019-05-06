@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';
 
 import { Pessoa } from './../core/model';
+import {environment} from '../../environments/environment';
 
 export class PessoaFiltro {
   nome: string;
@@ -14,9 +15,11 @@ export class PessoaFiltro {
 @Injectable()
 export class PessoaService {
 
-  pessoasUrl = 'https://pedrobacchini-algamoney-api.herokuapp.com/pessoas';
+  pessoasUrl: string;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+  }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
     const params = new URLSearchParams();
