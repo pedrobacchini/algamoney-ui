@@ -8,12 +8,13 @@ import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdia
 import { ToastyModule } from 'ng2-toasty';
 
 import { ErrorHandlerService } from './error-handler.service';
-import { PessoaService } from './../pessoas/pessoa.service';
-import { LancamentoService } from './../lancamentos/lancamento.service';
-import { CategoriaService } from './../categorias/categoria.service';
+import { PessoaService } from '../pessoas/pessoa.service';
+import { LancamentoService } from '../lancamentos/lancamento.service';
+import { CategoriaService } from '../categorias/categoria.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { AuthService } from '../seguranca/auth.service';
 
 
 registerLocaleData(localePt, 'pt-BR');
@@ -39,6 +40,7 @@ registerLocaleData(localePt, 'pt-BR');
     ErrorHandlerService,
 
     ConfirmationService,
+    AuthService,
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
