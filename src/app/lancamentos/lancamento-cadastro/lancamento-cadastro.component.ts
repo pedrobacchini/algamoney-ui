@@ -5,10 +5,10 @@ import { Title } from '@angular/platform-browser';
 
 import { ToastyService } from 'ng2-toasty';
 
-import { ErrorHandlerService } from './../../core/error-handler.service';
-import { CategoriaService } from './../../categorias/categoria.service';
-import { PessoaService } from './../../pessoas/pessoa.service';
-import { LancamentoService } from './../lancamento.service';
+import { ErrorHandlerService } from '../../core/error-handler.service';
+import { CategoriaService } from '../../categorias/categoria.service';
+import { PessoaService } from '../../pessoas/pessoa.service';
+import { LancamentoService } from '../lancamento.service';
 import { Lancamento } from 'src/app/core/model';
 
 
