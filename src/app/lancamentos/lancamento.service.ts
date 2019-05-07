@@ -1,12 +1,12 @@
-import { URLSearchParams } from '@angular/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment';
 
 import { Lancamento } from 'src/app/core/model';
-import {environment} from '../../environments/environment';
-import {AuthHttp} from 'angular2-jwt';
+import { environment } from '../../environments/environment';
+import { MoneyHttp } from '../seguranca/money-http';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -21,41 +21,42 @@ export class LancamentoService {
 
   lancamentosUrl: string;
 
-  constructor(private http: AuthHttp) {
+  constructor(private http: MoneyHttp) {
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
   }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
-    const params = new URLSearchParams();
-
-    params.set('page', filtro.pagina.toString());
-    params.set('size', filtro.itensPorPagina.toString());
+    let params = new HttpParams({
+      fromObject: {
+        page: filtro.pagina.toString(),
+        size: filtro.itensPorPagina.toString()
+      }
+    });
 
     if (filtro.descricao) {
-      params.set('descricao', filtro.descricao);
+      params = params.append('descricao', filtro.descricao);
     }
 
     if (filtro.dataVencimentoInicio) {
-      params.set('dataVencimentoDe',
+      params = params.append('dataVencimentoDe',
         moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD'));
         console.log(filtro.dataVencimentoInicio);
     }
 
     if (filtro.dataVencimentoFim) {
-      params.set('dataVencimentoAte',
+      params = params.append('dataVencimentoAte',
         moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
         console.log(filtro.dataVencimentoFim);
     }
 
-    return this.http.get(`${this.lancamentosUrl}?resumo`, { search: params })
+    return this.http.get<any>(`${this.lancamentosUrl}?resumo`, { params })
       .toPromise()
       .then(response => {
-        const responseJson = response.json();
-        const lancamentos = responseJson.content;
+        const lancamentos = response.content;
 
         return {
           lancamentos,
-          total: responseJson.totalElements
+          total: response.totalElements
         };
       });
   }
@@ -67,18 +68,15 @@ export class LancamentoService {
   }
 
   adicionar(lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.post(this.lancamentosUrl,
-       JSON.stringify(lancamento))
-      .toPromise()
-      .then(response => response.json());
+    return this.http.post<Lancamento>(this.lancamentosUrl, lancamento)
+      .toPromise();
   }
 
   atualizar (lancamento: Lancamento): Promise<Lancamento> {
-    return this.http.put(`${this.lancamentosUrl}/${lancamento.id}`,
-        JSON.stringify(lancamento))
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.id}`, lancamento)
           .toPromise()
           .then(response => {
-            const lancamentoAlterado = response.json() as Lancamento;
+            const lancamentoAlterado = response;
 
             this.converterStringParaDatas([lancamentoAlterado]);
 
@@ -87,10 +85,10 @@ export class LancamentoService {
   }
 
   buscarPorId(id: number): Promise<Lancamento> {
-    return this.http.get(`${this.lancamentosUrl}/${id}`)
+    return this.http.get<Lancamento>(`${this.lancamentosUrl}/${id}`)
     .toPromise()
     .then(response => {
-      const lancamento = response.json() as Lancamento;
+      const lancamento = response;
 
       this.converterStringParaDatas([lancamento]);
 

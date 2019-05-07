@@ -4,9 +4,8 @@ import { Title } from '@angular/platform-browser';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/components/common/api';
 import { ToastyService } from 'ng2-toasty';
 
-import { ErrorHandlerService } from './../../core/error-handler.service';
-import { PessoaFiltro, PessoaService } from './../pessoa.service';
-
+import { ErrorHandlerService } from '../../core/error-handler.service';
+import { PessoaFiltro, PessoaService } from '../pessoa.service';
 
 @Component({
   selector: 'app-pessoas-pesquisa',

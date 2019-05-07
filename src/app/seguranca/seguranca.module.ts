@@ -1,20 +1,17 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
+import { JwtModule } from '@auth0/angular-jwt';
 import { ButtonModule } from 'primeng/components/button/button';
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
-import {AuthConfig, AuthHttp} from 'angular2-jwt';
-import {Http, RequestOptions} from '@angular/http';
+import { environment } from '../../environments/environment';
 
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  const config = new AuthConfig({
-    globalHeaders: [{ 'Content-Type': 'application/json' }]
-  });
-  return new AuthHttp( config, http, options);
+export function tokenGetter() {
+  return localStorage.getItem('token');
 }
 
 @NgModule({
@@ -23,17 +20,18 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     CommonModule,
     FormsModule,
 
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: environment.tokenWhitelistedDomains,
+        blacklistedRoutes: environment.tokenBlacklistedDomains
+      }
+    }),
     InputTextModule,
     ButtonModule,
 
     SegurancaRoutingModule
   ],
-  providers: [
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
-    }
-  ]
+  providers: []
 })
 export class SegurancaModule { }

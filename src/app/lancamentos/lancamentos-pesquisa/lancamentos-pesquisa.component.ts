@@ -4,9 +4,8 @@ import { Title } from '@angular/platform-browser';
 import { LazyLoadEvent, ConfirmationService } from 'primeng/components/common/api';
 import { ToastyService } from 'ng2-toasty';
 
-import { ErrorHandlerService } from './../../core/error-handler.service';
-import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
-
+import { ErrorHandlerService } from '../../core/error-handler.service';
+import { LancamentoService, LancamentoFiltro } from '../lancamento.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',

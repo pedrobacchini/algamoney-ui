@@ -15,8 +15,4 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  criarNovoAccessToken() {
-    this.auth.obterNovoAcessToken();
-  }
-
 }
