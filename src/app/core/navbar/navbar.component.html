@@ -3,8 +3,9 @@
   <div class="container">
     <div class="ui-g">
       <div class="ui-g-12">
-        <a href="javascript:;" class="navbar-toggle" (click)="exibindoMenu = !exibindoMenu">
-          <i class="pi pi-bars"></i>
+        <a href="javascript:;" class="navbar-toggle">
+          <i class="pi pi-bars" (click)="exibindoMenu = !exibindoMenu"></i>
+          <button type="button" (click)="criarNovoAccessToken()">Novo access token</button>
         </a>
       </div>
     </div>
