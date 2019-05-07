@@ -6,6 +6,7 @@ import { ToastyService } from 'ng2-toasty';
 
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { PessoaFiltro, PessoaService } from '../pessoa.service';
+import { AuthService } from '../../seguranca/auth.service';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -21,6 +22,7 @@ export class PessoasPesquisaComponent implements OnInit {
 
   constructor(
     private pessoaService: PessoaService,
+    private auth: AuthService,
     private errorHandler: ErrorHandlerService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,

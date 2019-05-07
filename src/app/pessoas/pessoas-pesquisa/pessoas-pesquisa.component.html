@@ -43,7 +43,8 @@
             <ng-template let-pes="rowData" pTemplate="body">
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
               [routerLink]="['/pessoas', pes.id]"></a>
-              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pes)"></button>
+              <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
+                      (click)="confirmarExclusao(pes)" [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
             </ng-template>
           </p-column>
       </p-dataTable>
