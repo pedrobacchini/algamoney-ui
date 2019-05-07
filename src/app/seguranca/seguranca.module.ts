@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { environment } from '../../environments/environment';
+import {AuthGuard} from './auth.guard';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -32,6 +33,8 @@ export function tokenGetter() {
 
     SegurancaRoutingModule
   ],
-  providers: []
+  providers: [
+    AuthGuard
+  ]
 })
 export class SegurancaModule { }
