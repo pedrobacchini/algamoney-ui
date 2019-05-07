@@ -60,4 +60,8 @@ export class AuthService {
       this.jwtPayload = this.jwtHelper.decodeToken(token);
     }
   }
+
+  temPermissao(permissao: string) {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
+  }
 }

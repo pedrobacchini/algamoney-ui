@@ -14,11 +14,11 @@
 
     <li class="navbar-usuario" (click)="exibindoMenu = false">{{auth.jwtPayload?.nome}}</li>
 
-    <li class="navbar-menuitem" routerLinkActive="ativo">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
       <a routerLink="/lancamentos" (click)="exibindoMenu = false">Lançamentos</a>
     </li>
 
-    <li class="navbar-menuitem" routerLinkActive="ativo">
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.temPermissao('ROLE_PESQUISAR_PESSOA')">
       <a routerLink="/pessoas" (click)="exibindoMenu = false">Pessoas</a>
     </li>
 
