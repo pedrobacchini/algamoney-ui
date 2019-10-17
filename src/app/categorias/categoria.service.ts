@@ -2,11 +2,12 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class CategoriaService {
 
-  categoriasUrl = 'https://pedrobacchini-algamoney-api.herokuapp.com/categorias';
+  categoriasUrl = `${environment.baseUrl}/categorias`;
 
   constructor(private http: Http) { }
 

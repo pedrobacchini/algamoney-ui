@@ -1,9 +1,10 @@
-import { Http, Headers, URLSearchParams } from '@angular/http';
-import { Injectable } from '@angular/core';
+import {Headers, Http, URLSearchParams} from '@angular/http';
+import {Injectable} from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Pessoa } from './../core/model';
+import {Pessoa} from '../core/model';
+import {environment} from '../../environments/environment';
 
 export class PessoaFiltro {
   nome: string;
@@ -14,7 +15,7 @@ export class PessoaFiltro {
 @Injectable()
 export class PessoaService {
 
-  pessoasUrl = 'https://pedrobacchini-algamoney-api.herokuapp.com/pessoas';
+  pessoasUrl = `${environment.baseUrl}/pessoas`;
 
   constructor(private http: Http) { }
 
@@ -38,12 +39,10 @@ export class PessoaService {
       const responseJson = response.json();
       const pessoas = responseJson.content;
 
-      const resultado = {
+      return {
         pessoas,
         total: responseJson.totalElements
       };
-
-      return resultado;
 
     });
   }

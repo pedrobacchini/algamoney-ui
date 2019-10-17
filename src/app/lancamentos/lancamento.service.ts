@@ -1,10 +1,11 @@
-import { Http, Headers, URLSearchParams } from '@angular/http';
-import { Injectable } from '@angular/core';
+import {Headers, Http, URLSearchParams} from '@angular/http';
+import {Injectable} from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment';
 
-import { Lancamento } from 'src/app/core/model';
+import {Lancamento} from 'src/app/core/model';
+import {environment} from '../../environments/environment';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -17,9 +18,21 @@ export class LancamentoFiltro {
 @Injectable()
 export class LancamentoService {
 
-  lancamentosUrl = 'https://pedrobacchini-algamoney-api.herokuapp.com/lancamentos';
-
   constructor(private http: Http) { }
+
+  lancamentosUrl = `${environment.baseUrl}/lancamentos`;
+
+  private static converterStringParaDatas(lancamentos: Lancamento[]) {
+    for (const lancamento of lancamentos) {
+      lancamento.dataVencimento = moment(lancamento.dataVencimento,
+        'YYYY-MM-DD').toDate();
+
+        if (lancamento.dataPagamento) {
+          lancamento.dataPagamento = moment(lancamento.dataPagamento,
+            'YYYY-MM-DD').toDate();
+        }
+    }
+  }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const params = new URLSearchParams();
@@ -53,12 +66,10 @@ export class LancamentoService {
         const responseJson = response.json();
         const lancamentos = responseJson.content;
 
-        const resultado = {
+        return {
           lancamentos,
           total: responseJson.totalElements
         };
-
-        return resultado;
       });
   }
 
@@ -93,7 +104,7 @@ export class LancamentoService {
           .then(response => {
             const lancamentoAlterado = response.json() as Lancamento;
 
-            this.converterStringParaDatas([lancamentoAlterado]);
+            LancamentoService.converterStringParaDatas([lancamentoAlterado]);
 
             return lancamentoAlterado;
           });
@@ -108,21 +119,9 @@ export class LancamentoService {
     .then(response => {
       const lancamento = response.json() as Lancamento;
 
-      this.converterStringParaDatas([lancamento]);
+      LancamentoService.converterStringParaDatas([lancamento]);
 
       return lancamento;
     });
-  }
-
-  private converterStringParaDatas(lancamentos: Lancamento[]) {
-    for (const lancamento of lancamentos) {
-      lancamento.dataVencimento = moment(lancamento.dataVencimento,
-        'YYYY-MM-DD').toDate();
-
-        if (lancamento.dataPagamento) {
-          lancamento.dataPagamento = moment(lancamento.dataPagamento,
-            'YYYY-MM-DD').toDate();
-        }
-    }
   }
 }
