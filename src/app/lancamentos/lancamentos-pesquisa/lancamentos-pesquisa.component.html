@@ -57,9 +57,9 @@
           </p-column>
           <p-column styleClass="col-acoes">
               <ng-template let-lanc="rowData" pTemplate="body">
-                <a pButton icon="pi pi-pencil" pTooltip="Editar"
+                <button pButton icon="pi pi-pencil" pTooltip="Editar"
                  tooltipPosition="top"
-                 [routerLink]="['/lancamentos', lanc.id]"></a>
+                 [routerLink]="['/lancamentos', lanc.id]"></button>
                 <button pButton icon="pi pi-trash"
                   pTooltip="Excluir" tooltipPosition="top"
                   (click)="confirmarExclusao(lanc)"
