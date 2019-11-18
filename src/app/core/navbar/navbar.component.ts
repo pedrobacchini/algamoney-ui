@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
 
   exibindoMenu = false;
 
-  constructor(private auth: AuthService,
+  constructor(public auth: AuthService,
               private logoutService: LogoutService,
               private errorHandler: ErrorHandlerService,
               private router: Router) {
