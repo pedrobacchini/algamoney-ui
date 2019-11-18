@@ -17,7 +17,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new LancamentoFiltro();
   lancamentos = [];
-  @ViewChild('tabela') grid;
+  @ViewChild('tabela', {static: false}) grid;
 
   constructor(
     private lancamentoService: LancamentoService,

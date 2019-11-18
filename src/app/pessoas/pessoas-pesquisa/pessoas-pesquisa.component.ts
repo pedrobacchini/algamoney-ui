@@ -17,7 +17,7 @@ export class PessoasPesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new PessoaFiltro();
   pessoas = [];
-  @ViewChild('tabela') grid;
+  @ViewChild('tabela', {static: false}) grid;
 
   constructor(
     private pessoaService: PessoaService,
