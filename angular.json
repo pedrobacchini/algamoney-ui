@@ -23,7 +23,6 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/ng2-toasty/style-bootstrap.css",
               "node_modules/font-awesome/css/font-awesome.min.css",
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeng/resources/themes/omega/theme.css",
