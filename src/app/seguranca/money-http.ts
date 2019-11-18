@@ -41,8 +41,8 @@ export class MoneyHttp extends HttpClient {
     return this.fazerRequisicao<T>(() => super.post<T>(url, options));
   }
 
-  public put<T>(url: string, options?: any): Observable<T> {
-    return this.fazerRequisicao<T>(() => super.put<T>(url, options));
+  public put<T>(url: string, body: any | null, options?: any): Observable<T> {
+    return this.fazerRequisicao<T>(() => super.put<T>(url, body, options));
   }
 
   private fazerRequisicao<T>(fn: Function): Observable<T> {

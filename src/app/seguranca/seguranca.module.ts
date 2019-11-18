@@ -1,20 +1,16 @@
-import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { JwtModule } from '@auth0/angular-jwt';
-import { ButtonModule } from 'primeng/components/button/button';
-import { InputTextModule } from 'primeng/components/inputtext/inputtext';
+import {JWT_OPTIONS, JwtModule} from '@auth0/angular-jwt';
+import {ButtonModule} from 'primeng/components/button/button';
+import {InputTextModule} from 'primeng/components/inputtext/inputtext';
 
-import { LoginFormComponent } from './login-form/login-form.component';
-import { SegurancaRoutingModule } from './seguranca-routing.module';
-import { environment } from '../../environments/environment';
+import {LoginFormComponent} from './login-form/login-form.component';
+import {SegurancaRoutingModule} from './seguranca-routing.module';
 import {AuthGuard} from './auth.guard';
 import {LogoutService} from './logout.service';
-
-export function tokenGetter() {
-  return localStorage.getItem('token');
-}
+import {JwtConfigService, jwtOptionsFactory} from './jwt-config.service';
 
 @NgModule({
   declarations: [LoginFormComponent],
@@ -23,10 +19,10 @@ export function tokenGetter() {
     FormsModule,
 
     JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: environment.tokenWhitelistedDomains,
-        blacklistedRoutes: environment.tokenBlacklistedDomains
+      jwtOptionsProvider: {
+        provide: JWT_OPTIONS,
+        useFactory: jwtOptionsFactory,
+        deps: [JwtConfigService],
       }
     }),
     InputTextModule,
@@ -36,7 +32,9 @@ export function tokenGetter() {
   ],
   providers: [
     AuthGuard,
-    LogoutService
+    LogoutService,
+    JwtConfigService
   ]
 })
-export class SegurancaModule { }
+export class SegurancaModule {
+}
