@@ -1,11 +1,11 @@
-import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {Title} from '@angular/platform-browser';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
 
-import { ErrorHandlerService } from '../../core/error-handler.service';
-import { PessoaService } from '../pessoa.service';
-import { Pessoa } from '../../core/model';
+import {ErrorHandlerService} from '../../core/error-handler.service';
+import {PessoaService} from '../pessoa.service';
+import {Cidade, Estado, Pessoa} from '../../core/model';
 import {MessageService} from 'primeng/api';
 
 @Component({
@@ -16,6 +16,9 @@ import {MessageService} from 'primeng/api';
 export class PessoaCadastroComponent implements OnInit {
 
   pessoa = new Pessoa();
+  estados: Estado[];
+  cidades: Cidade[];
+  estadoSelecionado: Estado;
 
   constructor(
     private pessoaService: PessoaService,
@@ -24,10 +27,13 @@ export class PessoaCadastroComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private title: Title
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.title.setTitle('Nova pessoa');
+
+    this.carregarEstados();
 
     const idPessoa = (this.route.snapshot.params['id']);
 
@@ -40,13 +46,29 @@ export class PessoaCadastroComponent implements OnInit {
     return Boolean(this.pessoa.id);
   }
 
+  carregarEstados() {
+    this.pessoaService.listarEstados()
+      .then(estados => {
+        this.estados = estados;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarCidades() {
+    this.pessoaService.pesquisarCidades(this.estadoSelecionado.id)
+      .then(cidades => {
+        this.cidades = cidades;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
   carregarPessoa(id: number) {
     this.pessoaService.buscarPorId(id)
-    .then(pessoa => {
-      this.pessoa = pessoa;
-      this.atualizarTituloEdicao();
-    })
-    .catch(erro => this.errorHandler.handle(erro));
+      .then(pessoa => {
+        this.pessoa = pessoa;
+        this.atualizarTituloEdicao();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   salvar(form: FormControl) {
@@ -71,22 +93,22 @@ export class PessoaCadastroComponent implements OnInit {
 
   atualizarPessoa(form: FormControl) {
     this.pessoaService.atualizar(this.pessoa)
-    .then( pessoa => {
-      this.pessoa = pessoa;
+      .then(pessoa => {
+        this.pessoa = pessoa;
 
-      this.messageService.add({
-        severity: 'success',
-        detail: 'Pessoa atualizada com sucesso!'
-      });
-      this.atualizarTituloEdicao();
-    })
-    .catch(erro => this.errorHandler.handle(erro));
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Pessoa atualizada com sucesso!'
+        });
+        this.atualizarTituloEdicao();
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   nova(form: FormControl) {
     form.reset();
 
-    setTimeout(function() {
+    setTimeout(function () {
       this.pessoa = new Pessoa();
     }.bind(this), 1);
 
@@ -96,5 +118,4 @@ export class PessoaCadastroComponent implements OnInit {
   atualizarTituloEdicao() {
     this.title.setTitle(`Edição de pessoa: ${this.pessoa.nome}`);
   }
-
 }

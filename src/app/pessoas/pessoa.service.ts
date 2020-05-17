@@ -1,9 +1,9 @@
 import {HttpHeaders, HttpParams} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Pessoa } from '../core/model';
+import {Cidade, Estado, Pessoa} from '../core/model';
 import {environment} from '../../environments/environment';
 import {MoneyHttp} from '../seguranca/money-http';
 
@@ -17,9 +17,11 @@ export class PessoaFiltro {
 export class PessoaService {
 
   pessoasUrl: string;
+  estadosUrl: string;
 
   constructor(private http: MoneyHttp) {
     this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+    this.estadosUrl = `${environment.apiUrl}/estados`;
   }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
@@ -34,16 +36,16 @@ export class PessoaService {
       params = params.append('nome', filtro.nome);
     }
 
-    return this.http.get<any>(`${this.pessoasUrl}?resumo`, { params })
-    .toPromise()
-    .then(response => {
-      const pessoas = response.content;
+    return this.http.get<any>(`${this.pessoasUrl}?resumo`, {params})
+      .toPromise()
+      .then(response => {
+        const pessoas = response.content;
 
-      return {
-        pessoas,
-        total: response.totalElements
-      };
-    });
+        return {
+          pessoas,
+          total: response.totalElements
+        };
+      });
   }
 
   listarTodas(): Promise<any> {
@@ -62,9 +64,9 @@ export class PessoaService {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json');
 
-    return this.http.put(`${this.pessoasUrl}/${id}/ativo`, ativo, { headers })
-    .toPromise()
-    .then(() => null);
+    return this.http.put(`${this.pessoasUrl}/${id}/ativo`, ativo, {headers})
+      .toPromise()
+      .then(() => null);
   }
 
   adicionar(pessoa: Pessoa): Promise<Pessoa> {
@@ -72,13 +74,23 @@ export class PessoaService {
       .toPromise();
   }
 
-  atualizar (pessoa: Pessoa): Promise<Pessoa> {
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
     return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.id}`, pessoa)
-          .toPromise();
+      .toPromise();
   }
 
   buscarPorId(id: number): Promise<Pessoa> {
     return this.http.get<Pessoa>(`${this.pessoasUrl}/${id}`)
-    .toPromise();
+      .toPromise();
+  }
+
+  listarEstados(): Promise<Estado[]> {
+    return this.http.get<Estado[]>(`${this.estadosUrl}`)
+      .toPromise();
+  }
+
+  pesquisarCidades(id: number): Promise<Cidade[]> {
+    return this.http.get<Cidade[]>(`${this.estadosUrl}/${id}/cidades`)
+      .toPromise();
   }
 }
